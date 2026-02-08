@@ -1,9 +1,7 @@
 # Here is a program that will work with sqlite to perform various tasks onto a SQL relational database
 
 import sqlite3
-import sys
 import random
-import datetime
 
 DB_name = "vet_clinic.db"
 
@@ -64,11 +62,11 @@ def query_patient(conn):
         print("No records found") # in case there are no records in the database, unlikely but good for error catching
 
     else:
-        print(f"\n{'ID':<6} {'Name':<15} {'Animal':<10} {'Next Appointment'}") #formating to create a neat table for visuals
-        print('-' * 55)
+        print(f"\n{'ID':<6} {'Name':<15} {'Animal':<10} {'Next Appointment':<18} {'Reason'} ") #formating to create a neat table for visuals
+        print('-' * 75)
         for row in rows:
-            print(f"{row[0]:<6} {row[1]:<15} {row[2]:<10} {row[4]}")
-    print('-' * 55)
+            print(f"{row[0]:<6} {row[1]:<15} {row[2]:<10} {row[4]:<18} {row[5]}")
+    print('-' * 75)
 
 
 def add_patient(conn):
