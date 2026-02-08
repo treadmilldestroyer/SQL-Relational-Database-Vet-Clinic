@@ -64,11 +64,11 @@ def query_patient(conn):
         print("No records found") # in case there are no records in the database, unlikely but good for error catching
 
     else:
-        print(f"\n{"ID":<5} {"Name":<15} {"Animal":<10} {"Next Appointment"}") #formating to create a neat table for visuals
-        print("-" * 55)
+        print(f"\n{'ID':<5} {'Name':<15} {'Animal':<10} {'Next Appointment'}") #formating to create a neat table for visuals
+        print('-' * 55)
         for row in rows:
             print(f"{row[0]:<5} {row[1]:<15} {row[2]:<10} {row[4]}")
-    print("-" * 55)
+    print('-' * 55)
 
 
 def add_patient(conn):
@@ -198,6 +198,13 @@ def delete_patient(conn):
 
 # main function is a menu to give an interface for users to perform desired actions on database
 def main():
+    conn = db_connection()
+    # safety mechanism in case we don't connect to database
+    if conn is None:
+        return
+
+    create_table(conn)
+
     while True:
         print("\n--- Vet Clinic Database Menu ---")
         print("1. Query a patient")
@@ -209,13 +216,13 @@ def main():
         choice = input("Enter the number for the action you would like to do: ")
 
         if choice == '1':
-            query_patient()
+            query_patient(conn)
         elif choice == '2':
-            add_patient()
+            add_patient(conn)
         elif choice == '3':
-            update_patient()
+            update_patient(conn)
         elif choice == '4':
-            delete_patient()
+            delete_patient(conn)
         elif choice == '5':
             break
         else:
