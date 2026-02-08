@@ -177,3 +177,52 @@ def update_patient(conn):
             print(f"Database Error: {error}")
     else:
         print("No changes made.")
+
+
+def delete_patient(conn):
+    cursor = conn.cursor() # the cursor is the tool that executes SQL commands and retrieves results
+
+    print("\n--- Current Patients ---")
+    cursor.execute("SELECT PatientID, PatientName FROM patients")
+    for row in cursor.fetchall():
+        print(f"ID: {row[0]} - Name: {row[1]}")
+
+    patient_id = input("\nEnter the Patient ID you would like to delete: ")
+    cursor.execute("DELETE FROM patients WHERE PatientID = ?", (patient_id,))
+    conn.commit()
+
+    if cursor.rowcount > 0:
+        print("Patient deleted successfully.")
+    else:
+        print("Error: Patient ID not found.")
+
+# main function is a menu to give an interface for users to perform desired actions on database
+def main():
+    while True:
+        print("\n--- Vet Clinic Database Menu ---")
+        print("1. Query a patient")
+        print("2. Add a patient")
+        print("3. Update a patient")
+        print("4. Delete a patient")
+        print("5. Exit menu")
+
+        choice = input("Enter the number for the action you would like to do: ")
+
+        if choice == '1':
+            query_patient()
+        elif choice == '2':
+            add_patient()
+        elif choice == '3':
+            update_patient()
+        elif choice == '4':
+            delete_patient()
+        elif choice == '5':
+            break
+        else:
+            print("Invalid selection. Please try again.")
+
+if __name__ == "__main__":
+    main()
+
+
+
