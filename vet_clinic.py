@@ -64,10 +64,10 @@ def query_patient(conn):
         print("No records found") # in case there are no records in the database, unlikely but good for error catching
 
     else:
-        print(f"\n{'ID':<5} {'Name':<15} {'Animal':<10} {'Next Appointment'}") #formating to create a neat table for visuals
+        print(f"\n{'ID':<6} {'Name':<15} {'Animal':<10} {'Next Appointment'}") #formating to create a neat table for visuals
         print('-' * 55)
         for row in rows:
-            print(f"{row[0]:<5} {row[1]:<15} {row[2]:<10} {row[4]}")
+            print(f"{row[0]:<6} {row[1]:<15} {row[2]:<10} {row[4]}")
     print('-' * 55)
 
 
