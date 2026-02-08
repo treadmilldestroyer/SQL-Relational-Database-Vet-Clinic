@@ -37,12 +37,26 @@ def create_table(conn):
 def add_patient(conn):
     cursor = conn.cursor()
 
+    patient_id = random.randint(000000, 999999)
     pet_name = input("Pet Name: ")
     animal_type = input(f"What kind of animal is {pet_name}: ")
     pet_age = input(f"How old is {pet_name}: ")
 
-    #generate a date and store it as the Next Appointment
-
+    #generate a date and store it as the Next Appointment (create this function if time permits)
+    days_ahead = random.randint(1,30)
+    appt_hour = random.randint(8, 16)
+    today = datetime.datetime.now()
+    future_date = today + datetime.timedelta(days=days_ahead)
+    next_appointment = future_date.replace(hour=appt_hour, minute=0, second=0, microsecond=0)
+    # next_appointment formatted for SQL
+    appointment_str = next_appointment.strftime("%Y-%m-%d %H:%M")
 
     reason = input("Please explain reason for appointment: ")
 
+
+
+    cursor.execute("""INSERT INTO patients (PatientID, PatientName, AnimalType, PatientAge, 
+                   NextAppointment, AppointmentDescription) VALUES (?, ?, ?, ?, ?, ?)""", (patient_id, pet_name, animal_type, pet_age, appointment_str, reason))
+
+    conn.commit()
+    print("Appointment saved.")
